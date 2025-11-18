@@ -1,4 +1,4 @@
-package com.tubesjavakel1.gui;
+package com.tubesjavakel2.gui;
 
 import java.awt.BorderLayout;
 
@@ -7,10 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import com.tubesjavakel1.algorithm.Dijkstra;
-import com.tubesjavakel1.gui.graph.GraphManager;
-import com.tubesjavakel1.gui.graph.GraphPanel;
-import com.tubesjavakel1.gui.graph.PathHighlighter;
+import com.tubesjavakel2.algorithm.Dijkstra;
+import com.tubesjavakel2.gui.graph.GraphManager;
+import com.tubesjavakel2.gui.graph.GraphPanel;
+import com.tubesjavakel2.gui.graph.PathHighlighter;
 
 import java.util.List;
 

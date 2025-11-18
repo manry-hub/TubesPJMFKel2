@@ -1,4 +1,4 @@
-package com.tubesjavakel1.gui.graph;
+package com.tubesjavakel2.gui.graph;
 
 import com.mxgraph.view.mxGraph;
 import java.util.HashMap;

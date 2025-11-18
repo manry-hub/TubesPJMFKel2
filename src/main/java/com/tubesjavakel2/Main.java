@@ -1,8 +1,8 @@
-package com.tubesjavakel1;
+package com.tubesjavakel2;
 
 import javax.swing.SwingUtilities;
 
-import com.tubesjavakel1.gui.AppWindow;
+import com.tubesjavakel2.gui.AppWindow;
 
 public class Main {
     public static void main(String[] args) {
