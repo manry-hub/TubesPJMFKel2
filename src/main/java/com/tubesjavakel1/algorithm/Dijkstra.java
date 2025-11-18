@@ -1,4 +1,4 @@
-package com.example.algorithm;
+package com.tubesjavakel1.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collections;

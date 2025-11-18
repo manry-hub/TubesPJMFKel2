@@ -1,4 +1,4 @@
-package com.example.gui.graph;
+package com.tubesjavakel1.gui.graph;
 
 import com.mxgraph.view.mxGraph;
 

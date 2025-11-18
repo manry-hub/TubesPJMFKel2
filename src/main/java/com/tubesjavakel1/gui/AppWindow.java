@@ -1,9 +1,4 @@
-package com.example.gui;
-
-import com.example.algorithm.Dijkstra;
-import com.example.gui.graph.GraphManager;
-import com.example.gui.graph.GraphPanel;
-import com.example.gui.graph.PathHighlighter;
+package com.tubesjavakel1.gui;
 
 import java.awt.BorderLayout;
 
@@ -11,6 +6,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import com.tubesjavakel1.algorithm.Dijkstra;
+import com.tubesjavakel1.gui.graph.GraphManager;
+import com.tubesjavakel1.gui.graph.GraphPanel;
+import com.tubesjavakel1.gui.graph.PathHighlighter;
+
 import java.util.List;
 
 public class AppWindow extends JFrame {
