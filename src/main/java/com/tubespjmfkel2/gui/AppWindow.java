@@ -21,7 +21,7 @@ public class AppWindow extends JFrame {
     public AppWindow() {
         super("Pencarian Rute Terpendek Menuju Bengkel");
 
-        JButton btnAddNode = new JButton("Tambah Titik Lokasi");
+        JButton btnAddNode = new JButton("Tambah Titik Tempat");
         JButton btnAddEdge = new JButton("Tambah Jarak antar Titik");
         JButton btnFindPath = new JButton("Cari Rute Terpendek");
 
@@ -43,26 +43,26 @@ public class AppWindow extends JFrame {
     }
 
     private void addNode() {
-        String name = JOptionPane.showInputDialog("Titik Lokasi:");
+        String name = JOptionPane.showInputDialog("Nama Tempat:");
         if (name != null && !name.isEmpty()) {
             gm.addNode(name);
         }
     }
 
     private void addEdge() {
-        String from = JOptionPane.showInputDialog("Mulai Dari:");
+        String from = JOptionPane.showInputDialog("Dimulai Dari:");
         String to = JOptionPane.showInputDialog("Menuju:");
         int w = Integer.parseInt(JOptionPane.showInputDialog("Jarak (km):"));
         gm.addEdge(from, to, w);
     }
 
     private void findPath() {
-        String start = JOptionPane.showInputDialog("Mulai dari:");
+        String start = JOptionPane.showInputDialog("Dimulai dari:");
         String end = JOptionPane.showInputDialog("Menuju:");
 
-        Dijkstra.Result result = Dijkstra.runWithDistance(gm.adj, start, end);
+        Dijkstra.Result result = Dijkstra.run(gm.adj, start, end);
 
-        if (result == null || result.path == null) {
+        if (result == null) {
             JOptionPane.showMessageDialog(this, "Rute tidak ditemukan!");
             return;
         }
@@ -73,8 +73,8 @@ public class AppWindow extends JFrame {
         sb.append("Rute Terpendek\n");
         sb.append("Dari: ").append(start).append("\n");
         sb.append("Ke:   ").append(end).append("\n\n");
-        sb.append("Urutan Rute:\n");
 
+        sb.append("Urutan Rute:\n");
         for (int i = 0; i < result.path.size(); i++) {
             sb.append(result.path.get(i));
             if (i < result.path.size() - 1)

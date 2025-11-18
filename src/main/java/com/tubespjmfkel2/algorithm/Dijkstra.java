@@ -10,27 +10,17 @@ import java.util.PriorityQueue;
 
 public class Dijkstra {
 
-    static class Node {
-        String name;
-        int dist;
-
-        Node(String n, int d) {
-            name = n;
-            dist = d;
-        }
-    }
-
     public static class Result {
-        public List<String> path;
-        public int distance;
+        public final List<String> path;
+        public final int distance;
 
-        public Result(List<String> p, int d) {
-            this.path = p;
-            this.distance = d;
+        public Result(List<String> path, int distance) {
+            this.path = path;
+            this.distance = distance;
         }
     }
 
-    public static Result runWithDistance(Map<String, Map<String, Integer>> adj, String start, String end) {
+    public static Result run(Map<String, Map<String, Integer>> adj, String start, String end) {
 
         if (!adj.containsKey(start) || !adj.containsKey(end))
             return null;
@@ -63,7 +53,7 @@ public class Dijkstra {
             }
         }
 
-        if (!prev.containsKey(end))
+        if (dist.get(end) == Integer.MAX_VALUE)
             return null;
 
         List<String> path = new ArrayList<>();
@@ -72,6 +62,16 @@ public class Dijkstra {
         Collections.reverse(path);
 
         return new Result(path, dist.get(end));
+    }
+
+    static class Node {
+        String name;
+        int dist;
+
+        Node(String n, int d) {
+            name = n;
+            dist = d;
+        }
     }
 
 }
