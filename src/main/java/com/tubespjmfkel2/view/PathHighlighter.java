@@ -5,18 +5,44 @@ import com.tubespjmfkel2.controller.GraphController;
 
 import java.util.List;
 
+/**
+ * PathHighlighter adalah utilitas untuk menyorot jalur tertentu pada graf
+ * yang ditampilkan menggunakan JGraphX ({@link mxGraph}).
+ * 
+ * <p>
+ * Class ini digunakan untuk menandai jalur (path) pada graf dengan mengubah
+ * warna dan ketebalan edge. Semua edge default akan dikembalikan ke style hitam
+ * sebelum edge pada jalur diberi style khusus.
+ * </p>
+ */
 public class PathHighlighter {
 
-    public static void highlight(mxGraph graph, GraphController gm, List<String> path) {
+    /**
+     * Menyorot jalur tertentu pada graf.
+     *
+     * <p>
+     * Semua edge akan dikembalikan ke style default (hitam) terlebih dahulu,
+     * kemudian edge pada jalur yang diberikan akan diwarnai hijau dan ditebalkan.
+     * </p>
+     *
+     * @param graph           Graf yang akan dimodifikasi ({@link mxGraph}).
+     * @param graphController Controller yang menyediakan mapping edge dan kontrol
+     *                        graf.
+     * @param path            Daftar nama node yang membentuk jalur yang akan
+     *                        disorot.
+     */
+    public static void highlight(mxGraph graph, GraphController graphController, List<String> path) {
         graph.getModel().beginUpdate();
         try {
-            gm.getEdgeMap().forEach((k, e) -> {
+            // Reset semua edge ke style default
+            graphController.getEdgeMap().forEach((k, e) -> {
                 graph.setCellStyle("strokeColor=black;strokeWidth=1", new Object[] { e });
             });
 
+            // Sorot edge pada jalur
             for (int i = 0; i < path.size() - 1; i++) {
-                colorEdge(graph, gm, path.get(i), path.get(i + 1));
-                colorEdge(graph, gm, path.get(i + 1), path.get(i)); // jika bidirectional
+                colorEdge(graph, graphController, path.get(i), path.get(i + 1));
+                colorEdge(graph, graphController, path.get(i + 1), path.get(i)); // jika graf bidirectional
             }
 
         } finally {
@@ -24,11 +50,18 @@ public class PathHighlighter {
         }
     }
 
-    private static void colorEdge(mxGraph graph, GraphController gm, String from, String to) {
-        Object e = gm.getEdgeMap().get(from + "->" + to);
+    /**
+     * Memberi warna hijau dan menebalkan edge tertentu.
+     *
+     * @param graph           Graf yang dimodifikasi.
+     * @param graphController Controller yang menyediakan mapping edge.
+     * @param from            Nama node awal edge.
+     * @param to              Nama node akhir edge.
+     */
+    private static void colorEdge(mxGraph graph, GraphController graphController, String from, String to) {
+        Object e = graphController.getEdgeMap().get(from + "->" + to);
         if (e != null) {
             graph.setCellStyle("strokeColor=green;strokeWidth=3", new Object[] { e });
         }
     }
-
 }

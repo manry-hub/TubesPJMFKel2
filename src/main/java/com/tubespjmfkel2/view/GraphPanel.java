@@ -5,10 +5,50 @@ import com.tubespjmfkel2.controller.GraphController;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 
+/**
+ * GraphPanel adalah panel khusus untuk menampilkan graf menggunakan
+ * library JGraphX (mxGraph). Panel ini mengintegrasikan {@link GraphController}
+ * untuk mengontrol data graf dan {@link mxGraphComponent} untuk rendering
+ * grafik.
+ * 
+ * <p>
+ * Panel ini menggunakan layout {@link BorderLayout} dan menempatkan
+ * {@link mxGraphComponent} di tengah panel.
+ * </p>
+ */
 public class GraphPanel extends JPanel {
 
-    public GraphPanel(GraphController gm) {
+    /** Controller yang menangani logika graf dan data graf */
+    private final GraphController graphController;
+
+    /** Komponen graf yang menampilkan graf secara visual */
+    private final mxGraphComponent graphComponent;
+
+    /**
+     * Konstruktor GraphPanel.
+     *
+     * @param graphController Instance dari {@link GraphController} yang digunakan
+     *                        untuk mengelola graf yang akan ditampilkan.
+     */
+    public GraphPanel(GraphController graphController) {
+        this.graphController = graphController;
         setLayout(new BorderLayout());
-        add(new mxGraphComponent(gm.getGraph()), BorderLayout.CENTER);
+
+        // Membuat dan menambahkan komponen graf ke panel
+        graphComponent = new mxGraphComponent(graphController.getUiGraph());
+        add(graphComponent, BorderLayout.CENTER);
+    }
+
+    /**
+     * Memperbarui tampilan graf.
+     * <p>
+     * Metode ini melakukan refresh pada komponen graf dan memanggil
+     * repaint serta revalidate agar perubahan graf terlihat di UI.
+     * </p>
+     */
+    public void refresh() {
+        graphComponent.refresh();
+        repaint();
+        revalidate();
     }
 }
