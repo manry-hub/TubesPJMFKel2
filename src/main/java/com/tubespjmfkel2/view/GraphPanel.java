@@ -26,6 +26,12 @@ public class GraphPanel extends JPanel {
 
     /**
      * Konstruktor GraphPanel.
+     * Kalau nanti Anda menambahkan fitur seperti:
+     * 1. Klik vertex untuk menampilkan informasi
+     * 2. Klik kanan untuk hapus vertex/edge
+     * 3. Panel melakukan update terhadap graph tanpa lewat AppWindow
+     * 4. Menangani event keyboard/mouse langsung dari panel
+     * 5. maka GraphPanel akan butuh akses ke controller.
      *
      * @param graphController Instance dari {@link GraphController} yang digunakan
      *                        untuk mengelola graf yang akan ditampilkan.
