@@ -1,4 +1,4 @@
-package com.tubespjmfkel2.view;
+package com.tubespjmfkel2.view.layout;
 
 import java.awt.BorderLayout;
 import java.util.List;
@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import com.tubespjmfkel2.controller.DijkstraController;
 import com.tubespjmfkel2.controller.GraphController;
 import com.tubespjmfkel2.dto.DijkstraResult;
+import com.tubespjmfkel2.view.component.GraphPanel;
+import com.tubespjmfkel2.view.util.PathHighlighter;
 
 /**
  * Kelas utama antarmuka grafis (GUI) aplikasi pencarian rute terpendek
@@ -30,7 +32,7 @@ import com.tubespjmfkel2.dto.DijkstraResult;
  * visualisasi graph.
  * </p>
  */
-public class AppWindow extends JFrame {
+public class MainFrame extends JFrame {
 
     /** Controller yang menangani operasi graph model dan UI graph. */
     private final GraphController graphController = new GraphController();
@@ -44,7 +46,7 @@ public class AppWindow extends JFrame {
     /**
      * Konstruktor utama yang menginisialisasi jendela, tombol menu, dan panel graf.
      */
-    public AppWindow() {
+    public MainFrame() {
         super("Pencarian Rute Terpendek Menuju Bengkel");
 
         // Tombol - tombol aksi

@@ -1,4 +1,4 @@
-package com.tubespjmfkel2.view;
+package com.tubespjmfkel2.view.util;
 
 import com.mxgraph.view.mxGraph;
 import com.tubespjmfkel2.controller.GraphController;

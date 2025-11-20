@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.mxgraph.view.mxGraph;
-import com.tubespjmfkel2.model.Graph;
-import com.tubespjmfkel2.model.Vertex;
+import com.tubespjmfkel2.model.entity.Graph;
+import com.tubespjmfkel2.model.entity.Vertex;
 
 /**
  * Controller yang bertanggung jawab mengelola struktur graph,

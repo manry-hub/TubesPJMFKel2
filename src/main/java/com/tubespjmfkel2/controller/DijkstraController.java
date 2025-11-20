@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.tubespjmfkel2.dto.DijkstraResult;
-import com.tubespjmfkel2.model.Dijkstra;
-import com.tubespjmfkel2.model.Vertex;
+import com.tubespjmfkel2.model.algorithm.Dijkstra;
+import com.tubespjmfkel2.model.entity.Vertex;
 
 /**
  * Controller yang bertanggung jawab menjalankan proses perhitungan
