@@ -1,9 +1,6 @@
 package com.tubespjmfkel2.model.entity;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Representasi dari sebuah simpul (vertex) dalam graph.
@@ -30,8 +27,8 @@ public class Vertex {
     /** Jarak dari vertex sumber. Default = tak hingga */
     private Integer distance = Integer.MAX_VALUE;
 
-    /** Daftar vertex tetangga beserta bobot edge menuju masing-masing tetangga */
-    private Map<Vertex, Integer> adjacentVertices = new HashMap<>();
+
+    private List<Edge> edges = new ArrayList<>();
 
     /**
      * Membuat instance vertex baru dengan nama tertentu.
@@ -42,22 +39,17 @@ public class Vertex {
         this.name = name;
     }
 
-    /**
-     * Menambahkan edge dari vertex ini menuju vertex lain dengan bobot tertentu.
-     *
-     * @param destination vertex tujuan
-     * @param distance    bobot edge
-     */
-    public void addDestination(Vertex destination, int distance) {
-        adjacentVertices.put(destination, distance);
+    public void addEdge(Vertex destination, int weight) {
+        edges.add(new Edge(this, destination, weight));
     }
+
+    public List<Edge> getEdges() {
+        return edges;
+    }
+
 
     public String getName() {
         return name;
-    }
-
-    public Map<Vertex, Integer> getAdjacentVertices() {
-        return adjacentVertices;
     }
 
     public List<Vertex> getShortestPath() {

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.tubespjmfkel2.model.entity.Edge;
 import com.tubespjmfkel2.model.entity.Graph;
 import com.tubespjmfkel2.model.entity.Vertex;
 
@@ -31,42 +32,34 @@ public class Dijkstra {
      * dari vertex sumber (source) menuju seluruh vertex dalam graph.
      *
      * @param graph  graph yang berisi vertex, edge, dan bobotnya
-     * @param source vertex awal tempat proses pencarian rute dimulai
+     * @param source vertex awal (jarak awal = 0).
      * @return graph yang sudah terisi informasi jarak terpendek pada setiap vertex
      */
     public static Graph calculateShortestPathFromSource(Graph graph, Vertex source) {
 
-        // Vertex sumber memiliki jarak 0 sebagai titik awal
         source.setDistance(0);
 
-        // Himpunan vertex yang sudah dipastikan jaraknya final
         Set<Vertex> settledVertices = new HashSet<>();
-
-        // Himpunan vertex yang masih harus diperiksa
         Set<Vertex> unsettledVertices = new HashSet<>();
 
         unsettledVertices.add(source);
 
         while (!unsettledVertices.isEmpty()) {
 
-            // Ambil vertex dengan jarak (distance) paling kecil
             Vertex currentVertex = getLowestDistanceVertex(unsettledVertices);
             unsettledVertices.remove(currentVertex);
 
-            // Periksa semua vertex tetangga dari vertex saat ini
-            for (Map.Entry<Vertex, Integer> adjacencyPair : currentVertex.getAdjacentVertices().entrySet()) {
+            for (Edge edge : currentVertex.getEdges()) {
 
-                Vertex adjacentVertex = adjacencyPair.getKey();
-                Integer edgeWeight = adjacencyPair.getValue();
+                Vertex adjacent = edge.getDestination();
+                int weight = edge.getWeight();
 
-                // Jika tetangga belum dipastikan jaraknya, lakukan relaksasi
-                if (!settledVertices.contains(adjacentVertex)) {
-                    calculateMinimumDistance(adjacentVertex, edgeWeight, currentVertex);
-                    unsettledVertices.add(adjacentVertex);
+                if (!settledVertices.contains(adjacent)) {
+                    calculateMinimumDistance(adjacent, weight, currentVertex);
+                    unsettledVertices.add(adjacent);
                 }
             }
 
-            // Vertex sudah selesai diproses
             settledVertices.add(currentVertex);
         }
 

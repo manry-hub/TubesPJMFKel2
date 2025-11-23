@@ -1,59 +1,79 @@
 package com.tubespjmfkel2.model.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
- * Kelas Graph merepresentasikan struktur data graf sederhana
- * yang terdiri dari sekumpulan Vertex.
+ * Kelas Graph merepresentasikan struktur graf berarah yang terdiri dari
+ * kumpulan simpul (Vertex) dan sisi (Edge).
  *
- * <p>
- * Graph ini tidak menyimpan struktur edge secara langsung,
- * karena setiap Vertex bertanggung jawab menyimpan daftar
- * ketetanggaannya sendiri. Dengan demikian, Graph hanya berfungsi
- * sebagai kontainer vertex.
- * </p>
+ * Setiap Vertex dapat dihubungkan melalui satu atau lebih Edge
+ * dengan bobot yang menyatakan jarak atau biaya perjalanan.
  *
- * <h2>Fungsi Utama:</h2>
- * <ul>
- * <li><b>addVertex(Vertex vertex)</b> – menambahkan vertex baru ke dalam
- * graf.</li>
- * <li><b>getVertices()</b> – mengambil seluruh vertex yang ada dalam graf.</li>
- * <li><b>resetAllVertices()</b> – mereset seluruh vertex ke nilai awal
- * (misalnya distance, path, visited flag, dll). Ini berguna agar graf siap
- * digunakan kembali setelah algoritma seperti Dijkstra dijalankan.</li>
- * </ul>
+ * Kelas ini mendukung penambahan simpul, penambahan edge, serta
+ * melakukan reset terhadap seluruh vertex sebelum menjalankan algoritma
+ * pencarian jalur.
  */
 public class Graph {
 
+    /** Kumpulan seluruh simpul dalam graf */
     private Set<Vertex> vertices = new HashSet<>();
 
+    /** Kumpulan seluruh edge dalam graf */
+    private List<Edge> edges = new ArrayList<>();
+
     /**
-     * Menambahkan sebuah vertex ke dalam graf.
+     * Menambahkan sebuah simpul baru ke dalam graf.
      *
-     * @param vertex vertex yang akan ditambahkan.
+     * @param vertex Vertex baru yang akan ditambahkan
      */
     public void addVertex(Vertex vertex) {
         vertices.add(vertex);
     }
 
     /**
-     * Mengambil seluruh vertex yang tersimpan dalam graf.
+     * Menambahkan sebuah edge dari source ke destination dengan bobot tertentu.
+     * Edge akan disimpan di daftar edge global dan juga ditambahkan
+     * sebagai hubungan langsung pada simpul asal.
      *
-     * @return Set berisi objek Vertex.
+     * @param source      Simpul asal
+     * @param destination Simpul tujuan
+     * @param weight      Bobot perjalanan
+     */
+    public void addEdge(Vertex source, Vertex destination, int weight) {
+        Edge edge = new Edge(source, destination, weight);
+        edges.add(edge);
+        source.addEdge(destination, weight);
+    }
+
+    /**
+     * Mengembalikan seluruh simpul dalam graf.
+     *
+     * @return Set berisi Vertex
      */
     public Set<Vertex> getVertices() {
         return vertices;
     }
 
     /**
-     * Mereset seluruh vertex pada graf agar dapat digunakan ulang
-     * dalam perhitungan algoritma. Metode ini akan memanggil
-     * method reset() pada setiap Vertex.
+     * Mengembalikan seluruh edge dalam graf.
+     *
+     * @return List berisi Edge
      */
-    public void resetAllVertices() {
-        for (Vertex v : vertices)
-            v.reset();
+    public List<Edge> getEdges() {
+        return edges;
     }
 
+    /**
+     * Mengatur ulang setiap simpul dalam graf sebelum menjalankan algoritma
+     * pencarian rute (misalnya Dijkstra). Proses reset mengembalikan nilai
+     * jarak ke Infinity dan menghapus path sementara.
+     */
+    public void resetAllVertices() {
+        for (Vertex v : vertices) {
+            v.reset();
+        }
+    }
 }

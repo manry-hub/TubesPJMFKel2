@@ -154,8 +154,8 @@ public class GraphController {
         if (edgeMap.containsKey(from + "->" + to))
             return "Rute ini sudah ada!";
 
-        // ADD KE MODEL
-        vFrom.addDestination(vTo, weight);
+        // tambah edge pada graph baru
+        coreGraph.addEdge(vFrom, vTo, weight);
 
         // ADD KE UI
         uiGraph.getModel().beginUpdate();
