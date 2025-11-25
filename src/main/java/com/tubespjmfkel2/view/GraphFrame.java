@@ -209,13 +209,12 @@ public class GraphFrame extends JFrame {
         try {
             // Reset semua edge ke style default
             graphController.getEdgeMap().forEach((k, e) -> {
-                graph.setCellStyle("strokeColor=black;strokeWidth=1", new Object[] { e });
+                graph.setCellStyle("strokeColor=black;strokeWidth=1;", new Object[] { e });
             });
 
             // Sorot edge pada jalur
             for (int i = 0; i < path.size() - 1; i++) {
                 colorEdge(graph, graphController, path.get(i), path.get(i + 1));
-                colorEdge(graph, graphController, path.get(i + 1), path.get(i)); // jika graph bidirectional
             }
 
         } finally {
@@ -234,7 +233,7 @@ public class GraphFrame extends JFrame {
     private static void colorEdge(mxGraph graph, GraphController graphController, String from, String to) {
         Object e = graphController.getEdgeMap().get(from + "->" + to);
         if (e != null) {
-            graph.setCellStyle("strokeColor=green;strokeWidth=3", new Object[] { e });
+            graph.setCellStyle("strokeColor=green;strokeWidth=3;endArrow=none;", new Object[] { e });
         }
     }
 }

@@ -31,6 +31,8 @@ public class Vertex {
 
     private List<Edge> edges = new ArrayList<>();
 
+
+
     /**
      * Membuat instance vertex baru dengan nama tertentu.
      *

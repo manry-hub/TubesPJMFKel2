@@ -74,13 +74,16 @@ public class DijkstraController {
                 graphController.getCoreGraph(),
                 startVertex);
 
+        // Jika tidak ada jalur (distance tetap MAX_VALUE)
+        if (endVertex.getDistance() == Integer.MAX_VALUE) {
+            return null;
+        }
+
         // Bentuk path
         List<String> path = new ArrayList<>();
-        for (Vertex v : endVertex.getShortestPath())
+        for (Vertex v : endVertex.getShortestPath()) {
             path.add(v.getVertex());
-
-        if (!path.contains(inputEndVertex))
-            path.add(inputEndVertex);
+        }
 
         return new DijkstraResult(path, endVertex.getDistance());
     }

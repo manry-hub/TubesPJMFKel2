@@ -8,6 +8,7 @@ package com.tubespjmfkel2.model.entity;
  * Edge digunakan oleh algoritma pencarian jalur seperti Dijkstra untuk
  * menghitung jarak terpendek antar simpul di dalam graf.
  */
+
 public class Edge {
 
     /** Simpul asal dari edge */

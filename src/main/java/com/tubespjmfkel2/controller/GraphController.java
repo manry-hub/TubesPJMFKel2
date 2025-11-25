@@ -119,9 +119,10 @@ public class GraphController {
         Vertex vertex = new Vertex(inputVertex);
         coreGraph.addVertex(vertex);
 
+        Object uiVertex;
         uiGraph.getModel().beginUpdate();
         try {
-            uiGraph.insertVertex(
+            uiVertex = uiGraph.insertVertex(
                     uiGraph.getDefaultParent(),
                     null,
                     inputVertex,
@@ -132,8 +133,11 @@ public class GraphController {
             uiGraph.getModel().endUpdate();
         }
 
+        vertexUIMap.put(inputVertex, uiVertex);
+
         return null;
     }
+
 
     /**
      * Menambahkan edge berbobot (arah dari -> ke) ke graph.
@@ -195,7 +199,10 @@ public class GraphController {
                     null,
                     weight,
                     uiFrom,
-                    uiTo);
+                    uiTo,
+                    "endArrow=none;strokeColor=black;"
+
+                    );
 
             edgeMap.put(inputFrom + "->" + inputTo, uiEdge);
         } finally {
