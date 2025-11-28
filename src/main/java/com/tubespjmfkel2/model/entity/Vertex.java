@@ -1,7 +1,7 @@
 package com.tubespjmfkel2.model.entity;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
+
 import java.util.List;
 
 /**
@@ -24,7 +24,7 @@ public class Vertex {
     private final String vertex;
 
     /** Daftar vertex yang menyusun jalur terpendek menuju vertex ini */
-    private List<Vertex> shortestPath = new LinkedList<>();
+    private List<Vertex> shortestPath = new ArrayList<>();
 
     /** Jarak dari vertex sumber. Default = tak hingga */
     private Integer distance = Integer.MAX_VALUE;

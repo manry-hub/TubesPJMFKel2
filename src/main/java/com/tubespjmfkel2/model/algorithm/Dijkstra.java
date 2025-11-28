@@ -1,10 +1,6 @@
 package com.tubespjmfkel2.model.algorithm;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-
-import java.util.Set;
+import java.util.*;
 
 import com.tubespjmfkel2.model.entity.Edge;
 import com.tubespjmfkel2.model.entity.Graph;
@@ -113,7 +109,7 @@ public class Dijkstra {
             evaluationVertex.setDistance(sourceDistance + edgeWeight);
 
             // Salin path dari sumber dan tambahkan vertex saat ini
-            List<Vertex> shortestPath = new LinkedList<>(sourceVertex.getShortestPath());
+            List<Vertex> shortestPath = new ArrayList<>(sourceVertex.getShortestPath());
             shortestPath.add(sourceVertex);
 
             evaluationVertex.setShortestPath(shortestPath);
