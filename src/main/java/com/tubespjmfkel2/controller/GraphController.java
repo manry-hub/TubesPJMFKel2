@@ -36,23 +36,23 @@ public class GraphController {
     /**
      * Penyimpanan referensi edge UI berdasarkan pasangan vertex 'A->B'.
      */
-    private final Map<String, Object> edgeUIMap = new HashMap<>();
+    private final Map<String, Object> uiEdgeMap = new HashMap<>();
     /**
      * Mapping vertex UI: "A" → UI Vertex Object
      */
-    private final Map<String, Object> vertexUIMap = new HashMap<>();
+    private final Map<String, Object> uiVertexMap = new HashMap<>();
     /**
      * Struktur graph inti untuk perhitungan algoritmik.
      */
-    private Graph coreGraph = new Graph();
+    private Graph graph = new Graph();
 
     /**
      * Mengambil objek graph inti yang digunakan algoritma.
      *
      * @return objek {@link Graph} yang menyimpan struktur vertex dan edge.
      */
-    public Graph getCoreGraph() {
-        return coreGraph;
+    public Graph getGraph() {
+        return graph;
     }
 
     /**
@@ -70,10 +70,9 @@ public class GraphController {
      *
      * @return Map edge yang dipetakan berdasarkan format "From->To".
      */
-    public Map<String, Object> getEdgeUIMap() {
-        return edgeUIMap;
+    public Map<String, Object> getUiEdgeMap() {
+        return uiEdgeMap;
     }
-
 
     /**
      * Menambahkan sebuah vertex baru ke struktur graph dan tampilan UI.
@@ -99,7 +98,7 @@ public class GraphController {
             return "Titik Tempat '" + inputVertex + "' sudah ada!";
 
         Vertex vertex = new Vertex(inputVertex);
-        coreGraph.addVertex(vertex);
+        graph.addVertex(vertex);
 
         Object uiVertex;
         uiGraph.getModel().beginUpdate();
@@ -115,11 +114,10 @@ public class GraphController {
             uiGraph.getModel().endUpdate();
         }
 
-        vertexUIMap.put(inputVertex, uiVertex);
+        uiVertexMap.put(inputVertex, uiVertex);
 
         return null;
     }
-
 
     /**
      * Menambahkan edge berbobot (arah dari -> ke) ke graph.
@@ -164,11 +162,11 @@ public class GraphController {
             return "Titik Tempat tidak boleh menuju dirinya sendiri!";
         if (weight <= 0)
             return "Bobot harus lebih besar dari 0!";
-        if (edgeUIMap.containsKey(inputFrom + "->" + inputTo))
+        if (uiEdgeMap.containsKey(inputFrom + "->" + inputTo))
             return "Rute ini sudah ada!";
 
         // tambah edge pada graph baru
-        coreGraph.addEdge(vFrom, vTo, weight);
+        graph.addEdge(vFrom, vTo, weight);
 
         // ADD KE UI
         uiGraph.getModel().beginUpdate();
@@ -186,7 +184,7 @@ public class GraphController {
 
             );
 
-            edgeUIMap.put(inputFrom + "->" + inputTo, uiEdge);
+            uiEdgeMap.put(inputFrom + "->" + inputTo, uiEdge);
         } finally {
             uiGraph.getModel().endUpdate();
         }
@@ -201,7 +199,7 @@ public class GraphController {
      * @return objek {@link Vertex} jika ditemukan, atau {@code null} jika tidak ada
      */
     public Vertex findVertexModel(String inputVertex) {
-        return coreGraph.getVertices()
+        return graph.getVertices()
                 .stream()
                 .filter(v -> v.getVertex().equals(inputVertex))
                 .findFirst()
@@ -215,7 +213,7 @@ public class GraphController {
      * @return objek vertex representasi di UI, atau {@code null} jika tidak ada
      */
     private Object findVertexUI(String inputVertex) {
-        return vertexUIMap.get(inputVertex);
+        return uiVertexMap.get(inputVertex);
     }
 
     /**
@@ -231,9 +229,9 @@ public class GraphController {
      * </p>
      */
     public void resetGraph() {
-        coreGraph = new Graph(); // reset struktur algoritmik
-        edgeUIMap.clear();
-        vertexUIMap.clear();
+        graph = new Graph(); // reset struktur algoritmik
+        uiEdgeMap.clear();
+        uiVertexMap.clear();
 
         uiGraph.getModel().beginUpdate();
         try {

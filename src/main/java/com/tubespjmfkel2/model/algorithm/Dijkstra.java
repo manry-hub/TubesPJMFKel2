@@ -1,6 +1,9 @@
 package com.tubespjmfkel2.model.algorithm;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import com.tubespjmfkel2.model.entity.Edge;
 import com.tubespjmfkel2.model.entity.Graph;
@@ -39,20 +42,22 @@ public class Dijkstra {
         Set<Vertex> unsettledVertices = new HashSet<>();
 
         unsettledVertices.add(source);
-//jima pada saat vertex yang belum mapan itu masih ada
-//        akan melakukan yang namanaya evaluasi
+        // jima pada saat vertex yang belum mapan itu masih ada
+        // akan melakukan yang namanaya evaluasi
 
         while (!unsettledVertices.isEmpty()) {
-// vertex yang belum mapan itu akan dimasukan kedalam current vertex melalui method getLowsetDistanceVertex
+            // vertex yang belum mapan itu akan dimasukan kedalam current vertex melalui
+            // method getLowsetDistanceVertex
             Vertex currentVertex = getLowestDistanceVertex(unsettledVertices);
-//           vertex saat ini dihapus dari unsetlled vertex, jadi tidak perlu di looping lagi
+            // vertex saat ini dihapus dari unsetlled vertex, jadi tidak perlu di looping
+            // lagi
             unsettledVertices.remove(currentVertex);
-// loop edge untuk currentvertexnya
+            // loop edge untuk currentvertexnya
             for (Edge edge : currentVertex.getEdges()) {
-// edge tujuan akan dimasukan kedalam tetangga
+                // edge tujuan akan dimasukan kedalam tetangga
                 Vertex adjacent = edge.getDestination();
                 int weight = edge.getWeight();
-//
+                //
                 if (!settledVertices.contains(adjacent)) {
                     calculateMinimumDistance(adjacent, weight, currentVertex);
                     unsettledVertices.add(adjacent);
@@ -74,9 +79,9 @@ public class Dijkstra {
      */
     private static Vertex getLowestDistanceVertex(Set<Vertex> unsettledVertices) {
 
-//        belum ada vertex terbaik dan di set null
+        // belum ada vertex terbaik dan di set null
         Vertex lowestDistanceVertex = null;
-//        untuk nilai sementara adalah infinity
+        // untuk nilai sementara adalah infinity
         int lowestDistance = Integer.MAX_VALUE;
 
         // Telusuri semua vertex untuk menentukan jarak paling kecil
@@ -85,13 +90,13 @@ public class Dijkstra {
             int currentDistance = vertex.getDistance();
 
             if (currentDistance < lowestDistance) {
-//                masukan vertex kedalam lowest distance
+                // masukan vertex kedalam lowest distance
                 lowestDistance = currentDistance;
-//                masukan vertex yang di loop kedalam lowest distance vertex
+                // masukan vertex yang di loop kedalam lowest distance vertex
                 lowestDistanceVertex = vertex;
             }
         }
-// balikan nilai hasil dari lowestDistanceVertex (current vertex)
+        // balikan nilai hasil dari lowestDistanceVertex (current vertex)
         return lowestDistanceVertex;
     }
 

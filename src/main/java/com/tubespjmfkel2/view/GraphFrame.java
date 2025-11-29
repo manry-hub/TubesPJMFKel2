@@ -88,7 +88,6 @@ public class GraphFrame extends JFrame {
     // Menambah Vertex
     // ========================================================================
 
-
     /**
      * Menyorot jalur tertentu pada graph.
      *
@@ -107,8 +106,8 @@ public class GraphFrame extends JFrame {
         graph.getModel().beginUpdate();
         try {
             // Reset semua edge ke style default
-            graphController.getEdgeUIMap().forEach((k, e) -> {
-                graph.setCellStyle("strokeColor=red;strokeWidth=1;endArrow=none;", new Object[]{e});
+            graphController.getUiEdgeMap().forEach((k, e) -> {
+                graph.setCellStyle("strokeColor=red;strokeWidth=1;endArrow=none;", new Object[] { e });
             });
 
             // Sorot edge pada jalur
@@ -134,9 +133,9 @@ public class GraphFrame extends JFrame {
      * @param to              Nama vertex akhir edge.
      */
     private static void colorEdge(mxGraph graph, GraphController graphController, String from, String to) {
-        Object e = graphController.getEdgeUIMap().get(from + "->" + to);
+        Object e = graphController.getUiEdgeMap().get(from + "->" + to);
         if (e != null) {
-            graph.setCellStyle("strokeColor=green;strokeWidth=3;endArrow=none;", new Object[]{e});
+            graph.setCellStyle("strokeColor=green;strokeWidth=3;endArrow=none;", new Object[] { e });
         }
     }
 

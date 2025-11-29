@@ -25,6 +25,24 @@ public class Graph {
     private final List<Edge> edges = new ArrayList<>();
 
     /**
+     * Mengembalikan seluruh simpul dalam graf.
+     *
+     * @return Set berisi Vertex
+     */
+    public Set<Vertex> getVertices() {
+        return vertices;
+    }
+
+    /**
+     * Mengembalikan seluruh edge dalam graf.
+     *
+     * @return List berisi Edge
+     */
+    public List<Edge> getEdges() {
+        return edges;
+    }
+
+    /**
      * Menambahkan sebuah simpul baru ke dalam graf.
      *
      * @param vertex Vertex baru yang akan ditambahkan
@@ -46,26 +64,6 @@ public class Graph {
         Edge edge = new Edge(source, destination, weight);
         edges.add(edge);
         source.addEdge(edge); // simpan edge yang sama, bukan buat baru
-    }
-
-
-
-    /**
-     * Mengembalikan seluruh simpul dalam graf.
-     *
-     * @return Set berisi Vertex
-     */
-    public Set<Vertex> getVertices() {
-        return vertices;
-    }
-
-    /**
-     * Mengembalikan seluruh edge dalam graf.
-     *
-     * @return List berisi Edge
-     */
-    public List<Edge> getEdges() {
-        return edges;
     }
 
     /**
