@@ -198,7 +198,7 @@ public class GraphFrame extends JFrame {
         String inputStartVertex = JOptionPane.showInputDialog("Dari Titik Tempat:");
         String inputEndVertex = JOptionPane.showInputDialog("Menuju Titik Tempat:");
 
-        DijkstraResult result = dijkstraController.runDijkstra(inputStartVertex, inputEndVertex);
+        DijkstraResult result = dijkstraController.findShortestPath(inputStartVertex, inputEndVertex);
 
         if (result == null) {
             JOptionPane.showMessageDialog(null, "Rute tidak ditemukan!");

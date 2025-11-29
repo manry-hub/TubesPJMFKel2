@@ -201,7 +201,7 @@ public class GraphController {
     public Vertex findVertexModel(String inputVertex) {
         return graph.getVertices()
                 .stream()
-                .filter(v -> v.getVertex().equals(inputVertex))
+                .filter(v -> v.getVertexName().equals(inputVertex))
                 .findFirst()
                 .orElse(null);
     }
@@ -229,7 +229,7 @@ public class GraphController {
      * </p>
      */
     public void resetGraph() {
-        graph = new Graph(); // reset struktur algoritmik
+        graph.clear();
         uiEdgeMap.clear();
         uiVertexMap.clear();
 
@@ -243,4 +243,5 @@ public class GraphController {
             uiGraph.getModel().endUpdate();
         }
     }
+
 }

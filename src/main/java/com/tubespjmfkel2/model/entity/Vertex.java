@@ -21,7 +21,7 @@ import java.util.List;
 public class Vertex {
 
     /** Nama atau label unik dari vertex */
-    private final String vertex;
+    private final String vertexName;
 
     /** Daftar vertex yang menyusun jalur terpendek menuju vertex ini */
     private List<Vertex> shortestPath = new ArrayList<>();
@@ -31,28 +31,25 @@ public class Vertex {
 
     private final List<Edge> edges = new ArrayList<>();
 
-
-
     /**
      * Membuat instance vertex baru dengan nama tertentu.
      *
-     * @param vertex nama unik vertex
+     * @param vertexName nama unik vertex
      */
-    public Vertex(String vertex) {
-        this.vertex = vertex;
+    public Vertex(String vertexName) {
+        this.vertexName = vertexName;
     }
 
     public void addEdge(Edge edge) {
         edges.add(edge);
     }
 
-
     public List<Edge> getEdges() {
         return edges;
     }
 
-    public String getVertex() {
-        return vertex;
+    public String getVertexName() {
+        return vertexName;
     }
 
     public List<Vertex> getShortestPath() {
@@ -69,14 +66,5 @@ public class Vertex {
 
     public void setDistance(Integer distance) {
         this.distance = distance;
-    }
-
-    /**
-     * Mengembalikan status vertex ke kondisi awal sebelum perhitungan,
-     * yaitu jarak tak hingga dan path kosong.
-     */
-    public void reset() {
-        this.distance = Integer.MAX_VALUE;
-        this.shortestPath.clear();
     }
 }

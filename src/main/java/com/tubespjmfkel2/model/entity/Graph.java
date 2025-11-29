@@ -71,9 +71,10 @@ public class Graph {
      * pencarian rute (misalnya Dijkstra). Proses reset mengembalikan nilai
      * jarak ke Infinity dan menghapus path sementara.
      */
-    public void resetAllVertices() {
-        for (Vertex v : vertices) {
-            v.reset();
-        }
+
+    public void clear() {
+        vertices.clear();
+        edges.clear();
     }
+
 }
