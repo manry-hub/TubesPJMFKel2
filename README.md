@@ -25,7 +25,7 @@ Struktur ini mengikuti **pattern MVC (Model–View–Controller)**:
 ```
 tubespjmfkel2
 ├── controller
-│   ├── DijkstraController.java       # Menjalankan Dijkstra + komunikasi Model ↔ View
+│   ├── DijkstraController.java       # Menjalankan Dijkstra
 │   └── GraphController.java          # Mengatur graph (vertex, edge)
 ├── dto
 │   └── DijkstraResult.java           # DTO hasil perhitungan (path + distance)
@@ -35,11 +35,10 @@ tubespjmfkel2
 │   │   └── Dijkstra.java             # Algoritma Dijkstra murni
 │   └── entity
 │       ├── Edge.java                 # Representasi edge & bobot
-│       ├── Graph.java                # Struktur graf: adjacency, daftar vertex
+│       ├── Graph.java                # Struktur graf: daftar vertex dan Edge
 │       └── Vertex.java               # Representasi vertex
 └── view
-    ├── GraphFrame.java               # Frame utama aplikasi
-    └── GraphPanel.java               # Panel visual graf + background maps
+    └── GUI.java                      # GUI yang berisi Frame dan Panel
 ```
 
 ## 1. `Main.java`
