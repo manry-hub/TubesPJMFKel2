@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingConstants;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
-import java.awt.Frame;
+
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -18,10 +18,21 @@ import java.awt.Graphics;
 import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class WelcomeFrame extends JFrame {
+    private final MainFrame mainFrame;
 
+    @Autowired
+    public WelcomeFrame(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
+        initUI();
 
-    public WelcomeFrame() {
+    }
+
+    private void initUI() {
         setTitle("Kelompok 2");
         setSize(900, 250);
         setLocationRelativeTo(null);
@@ -35,8 +46,7 @@ public class WelcomeFrame extends JFrame {
         JLabel title = new JLabel(
                 "<html><center>Aplikasi Pencarian Rute Terpendek Menuju Bengkel<br>"
                         + "Menggunakan Algoritma Dijkstra</center></html>",
-                SwingConstants.CENTER
-        );
+                SwingConstants.CENTER);
         title.setFont(new Font("Segoe UI", Font.BOLD, 28));
         title.setForeground(Color.WHITE);
 
@@ -47,61 +57,58 @@ public class WelcomeFrame extends JFrame {
 
         JButton btnImport = new JButton("Import CSV");
         JButton btnMasuk = new JButton("Masuk ke Aplikasi");
-        btnMasuk.addActionListener(e -> {
-            new MainFrame();
-            dispose();
-        });
-
-        btnImport.addActionListener(e -> importCsv());
 
         btnImport.setPreferredSize(new Dimension(180, 40));
         btnMasuk.setPreferredSize(new Dimension(180, 40));
 
         btnPanel.add(btnImport);
         btnPanel.add(btnMasuk);
-
         mainPanel.add(btnPanel, BorderLayout.CENTER);
 
-        setVisible(true);
-    }
+        // event import CSV
+        btnImport.addActionListener(e -> importCsv());
 
+        // masuk ke mainframe
+        btnMasuk.addActionListener(e -> {
+            mainFrame.setVisible(true);
+
+            dispose();
+        });
+
+    }
 
     private void importCsv() {
         String pathCsv = JOptionPane.showInputDialog("Masukkan path CSV:");
 
-        if (pathCsv == null || pathCsv.isBlank()) return;
+        if (pathCsv == null || pathCsv.isBlank())
+            return;
 
         try {
-            MainFrame mf = new MainFrame();
-            boolean ok = mf.importCSV(pathCsv);
 
+            boolean ok = mainFrame.importCSV(pathCsv);
+            mainFrame.setVisible(true);
             if (!ok) {
-                mf.dispose();
+                mainFrame.dispose();
                 JOptionPane.showMessageDialog(
                         this,
                         "Import CSV gagal. Periksa file!",
                         "Gagal",
-                        JOptionPane.ERROR_MESSAGE
-                );
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             dispose();
+
 
         } catch (Exception error) {
             JOptionPane.showMessageDialog(
                     this,
                     "Terjadi kesalahan: " + error.getMessage(),
                     "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
-
-    // ==============================
-    // GRADIENT BACKGROUND PANEL
-    // ==============================
     class GradientPanel extends JPanel {
         @Override
         protected void paintComponent(Graphics g) {
@@ -113,8 +120,7 @@ public class WelcomeFrame extends JFrame {
 
             GradientPaint paint = new GradientPaint(
                     0, 0, new Color(17, 49, 71),
-                    0, h, new Color(13, 80, 125)
-            );
+                    0, h, new Color(13, 80, 125));
 
             g2.setPaint(paint);
             g2.fillRect(0, 0, w, h);

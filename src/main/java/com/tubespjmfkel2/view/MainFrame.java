@@ -1,6 +1,5 @@
 package com.tubespjmfkel2.view;
 
-
 import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.Color;
@@ -31,21 +30,28 @@ import java.io.File;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class MainFrame extends JFrame {
 
-    private GraphService graphService = new GraphService();
-
-    private DijkstraService dijkstraService = new DijkstraService(graphService);
+    private final GraphService graphService;
+    private final DijkstraService dijkstraService;
 
     private mxGraph uiGraph = new mxGraph();
-
     private Map<String, Object> uiVertexMap = new HashMap<>();
-
     private Map<String, Object> uiEdgeMap = new HashMap<>();
-
     private mxGraphComponent graphComponent = new mxGraphComponent(uiGraph);
 
-    public MainFrame() {
+    @Autowired
+    public MainFrame(GraphService graphService, DijkstraService dijkstraService) {
+        this.graphService = graphService;
+        this.dijkstraService = dijkstraService;
+        initUI();
+    }
+
+    private void initUI() {
 
         setTitle("Pencarian Rute Terpendek Menuju Bengkel");
 
@@ -96,16 +102,16 @@ public class MainFrame extends JFrame {
         graphComponent.setConnectable(false);
 
         setContentPane(backgroundPanel);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-        setSize(getMaximumSize());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setVisible(true);
     }
 
     private Image loadImage() {
         try {
-            return ImageIO.read(new File("/home/ughway/Debiancode/Personalprojects/TubesPJMFKel2/src/main/java/com/tubespjmfkel2/view/asset/background.png"));
+            return ImageIO.read(new File(
+                    "/home/ughway/Debiancode/Personalprojects/TubesPJMFKel2/src/main/java/com/tubespjmfkel2/view/asset/background.png"));
         } catch (Exception e) {
             System.out.println("Gagal load image: " + e.getMessage());
             return null;
@@ -146,9 +152,8 @@ public class MainFrame extends JFrame {
                 }
             }
 
-            refreshGraph();
             JOptionPane.showMessageDialog(null, "✔ Vertex: " + v + "\n✔ Edge: " + e);
-
+            refreshGraph();
             return true;
 
         } catch (Exception error) {
@@ -281,7 +286,7 @@ public class MainFrame extends JFrame {
         }
     }
 
-    private void resetGraph() {
+    public void resetGraph() {
         graphService.reset();
         uiVertexMap.clear();
         uiEdgeMap.clear();
@@ -297,16 +302,25 @@ public class MainFrame extends JFrame {
     }
 
     private void refreshGraph() {
-        mxHierarchicalLayout layout = new mxHierarchicalLayout(uiGraph);
-        layout.setOrientation(SwingConstants.WEST);
-        layout.setIntraCellSpacing(70);
-        layout.execute(uiGraph.getDefaultParent());
-        autoCenterGraph(uiGraph, graphComponent);
-        graphComponent.refresh();
-        repaint();
-        revalidate();
+        SwingUtilities.invokeLater(() -> {
+            mxHierarchicalLayout layout = new mxHierarchicalLayout(uiGraph);
+            layout.setOrientation(SwingConstants.WEST);
+            layout.setIntraCellSpacing(70);
 
+            uiGraph.getModel().beginUpdate();
+            try {
+                layout.execute(uiGraph.getDefaultParent());
+            } finally {
+                uiGraph.getModel().endUpdate();
+            }
+
+            autoCenterGraph(uiGraph, graphComponent);
+            graphComponent.refresh();
+            repaint();
+            revalidate();
+        });
     }
+
 
     public void autoCenterGraph(mxGraph uiGraph, mxGraphComponent graphComponent) {
         SwingUtilities.invokeLater(() -> {

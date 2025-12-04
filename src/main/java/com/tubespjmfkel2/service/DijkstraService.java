@@ -4,14 +4,19 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.tubespjmfkel2.dto.DijkstraResult;
 import com.tubespjmfkel2.algorithm.Dijkstra;
 import com.tubespjmfkel2.domain.Vertex;
 
+@Service
 public class DijkstraService {
 
     private GraphService graphService;
 
+    @Autowired
     public DijkstraService(GraphService graphService) {
         this.graphService = graphService;
     }
@@ -48,7 +53,7 @@ public class DijkstraService {
         for (Vertex vertex : vertexEnd.getShortestPath()) {
             path.add(vertex.getName());
         }
-//        Mengembalikan hasil dalam bentuk DTO
+        // Mengembalikan hasil dalam bentuk DTO
         path.add(vertexEnd.getName());
         return new DijkstraResult(path, vertexEnd.getDistance());
     }

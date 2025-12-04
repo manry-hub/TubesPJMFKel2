@@ -1,8 +1,11 @@
 package com.tubespjmfkel2.service;
 
+import org.springframework.stereotype.Service;
+
 import com.tubespjmfkel2.domain.Graph;
 import com.tubespjmfkel2.domain.Vertex;
 
+@Service
 public class GraphService {
 
     private Graph graph = new Graph();
@@ -12,8 +15,10 @@ public class GraphService {
     }
 
     public String addVertex(String vertexName) {
-        if (vertexName == null || vertexName.isBlank()) return "Nama tidak boleh kosong!";
-        if (findVertex(vertexName) != null) return "Vertex sudah ada!";
+        if (vertexName == null || vertexName.isBlank())
+            return "Nama tidak boleh kosong!";
+        if (findVertex(vertexName) != null)
+            return "Vertex sudah ada!";
 
         Vertex vertex = new Vertex();
         vertex.setName(vertexName);
@@ -26,10 +31,14 @@ public class GraphService {
         Vertex vertexSource = findVertex(source);
         Vertex vertexDestination = findVertex(destination);
 
-        if (vertexSource == null) return "Vertex asal tidak ditemukan!";
-        if (vertexDestination == null) return "Vertex tujuan tidak ditemukan!";
-        if (source.equals(destination)) return "Tidak boleh menuju dirinya!";
-        if (weight <= 0) return "Bobot harus > 0!";
+        if (vertexSource == null)
+            return "Vertex asal tidak ditemukan!";
+        if (vertexDestination == null)
+            return "Vertex tujuan tidak ditemukan!";
+        if (source.equals(destination))
+            return "Tidak boleh menuju dirinya!";
+        if (weight <= 0)
+            return "Bobot harus > 0!";
 
         graph.addEdge(vertexSource, vertexDestination, weight);
         return null;
