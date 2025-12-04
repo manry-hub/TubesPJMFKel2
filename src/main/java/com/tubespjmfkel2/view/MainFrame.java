@@ -1,7 +1,6 @@
 package com.tubespjmfkel2.view;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,20 +17,12 @@ import com.tubespjmfkel2.dto.DijkstraResult;
 import org.apache.commons.csv.CSVFormat;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.io.File;
 
-import javax.swing.JFrame;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
@@ -49,18 +40,9 @@ public class MainFrame extends JFrame {
 
     private mxGraphComponent graphComponent = new mxGraphComponent(uiGraph);
 
-    private Image loadImage(String path) {
-        try {
-            return ImageIO.read(new File(path));
-        } catch (Exception e) {
-            System.out.println("Gagal load image: " + e.getMessage());
-            return null;
-        }
-    }
-
     public MainFrame() {
 
-        super("Pencarian Rute Terpendek Menuju Bengkel");
+        setTitle("Pencarian Rute Terpendek Menuju Bengkel");
 
         JButton btnAddVertex = new JButton("➕ Tambah Titik Tempat");
         JButton btnAddEdge = new JButton("➕ Tambah Jarak");
@@ -72,31 +54,23 @@ public class MainFrame extends JFrame {
         btnFindPath.addActionListener(e -> findPath());
         btnResetGraph.addActionListener(e -> resetGraph());
 
-        // =============================
-        // PANEL TOMBOL (DIPERBAIKI POSISI)
-        // =============================
         JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.setBackground(Color.DARK_GRAY);
 
         JPanel leftPanel = new JPanel();
+        leftPanel.setOpaque(false);
         leftPanel.add(btnAddVertex);
         leftPanel.add(btnAddEdge);
-
-        JPanel centerPanel = new JPanel();
-        centerPanel.add(btnFindPath);
+        leftPanel.add(btnResetGraph);
 
         JPanel rightPanel = new JPanel();
-        rightPanel.add(btnResetGraph);
+        rightPanel.setOpaque(false);
+        rightPanel.add(btnFindPath);
 
         headerPanel.add(leftPanel, BorderLayout.WEST);
-        headerPanel.add(centerPanel, BorderLayout.CENTER);
         headerPanel.add(rightPanel, BorderLayout.EAST);
 
-        // =============================
-        // BACKGROUND IMAGE
-        // =============================
-        Image bgImage = loadImage(
-                "C:/Users/Saputra Bayu Wijaya/Downloads/tubes2/TubesPJMFKel2/src/main/java/com/tubespjmfkel2/view/asset/gambar.png");
-
+        Image bgImage = loadImage();
         JPanel backgroundPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -114,6 +88,7 @@ public class MainFrame extends JFrame {
         graphComponent.setOpaque(false);
         graphComponent.getViewport().setOpaque(false);
         graphComponent.getGraphControl().setOpaque(false);
+        graphComponent.setConnectable(false);
 
         setContentPane(backgroundPanel);
 
@@ -121,6 +96,15 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
+    }
+
+    private Image loadImage() {
+        try {
+            return ImageIO.read(new File("/home/ughway/Debiancode/Personalprojects/TubesPJMFKel2/src/main/java/com/tubespjmfkel2/view/asset/background.png"));
+        } catch (Exception e) {
+            System.out.println("Gagal load image: " + e.getMessage());
+            return null;
+        }
     }
 
     public boolean importCSV(String path) {
@@ -189,7 +173,7 @@ public class MainFrame extends JFrame {
                     vertexName,
                     100, 100,
                     100, 100,
-                    "shape=ellipse;strokeWidth=3;fontSize=20;strokeColor=white;strokeColorValue=3;fontColor=black");
+                    "shape=ellipse;strokeWidth=3;fontSize=20;strokeColor=white;strokeColorValue=3;fontColor=black;");
             uiVertexMap.put(vertexName, uiVertex);
         } finally {
             uiGraph.getModel().endUpdate();
@@ -226,7 +210,7 @@ public class MainFrame extends JFrame {
                     weight,
                     vertexSource,
                     vertexDestination,
-                    "endArrow=none;strokeColor=white;rounded=true;strokeWidth=3;fontColor=yellow;fontSize=20");
+                    "endArrow=none;strokeColor=white;rounded=true;strokeWidth=3;fontColor=orange;fontSize=20;");
 
             uiEdgeMap.put(source + "->" + destination, edge);
             uiEdgeMap.put(destination + "->" + source, edge);
@@ -272,7 +256,7 @@ public class MainFrame extends JFrame {
         try {
             uiEdgeMap.forEach((k, e) -> uiGraph.setCellStyle(
                     "strokeColor=red;strokeWidth=3;endArrow=none;rounded=true;fontColor=white;fontSize=20",
-                    new Object[] { e }));
+                    new Object[]{e}));
 
             for (int i = 0; i < path.size() - 1; i++) {
                 colorEdge(path.get(i), path.get(i + 1));
@@ -288,7 +272,7 @@ public class MainFrame extends JFrame {
         if (edge != null) {
             uiGraph.setCellStyle(
                     "strokeColor=green;strokeWidth=5;endArrow=none;rounded=true;fontColor=white;fontSize=20",
-                    new Object[] { edge });
+                    new Object[]{edge});
         }
     }
 
