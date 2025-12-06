@@ -62,6 +62,10 @@ public class Dijkstra {
                 // Ambil bobot jarak dari edge tersebut
                 int weight = edge.getWeight();
 
+                System.out.println("Memeriksa tetangga dari " + currentVertex.getName()
+                        + " → " + neighbor.getName()
+                        + " (weight = " + weight + ")");
+
                 // Jika neighbor belum diproses final jaraknya, lakukan relaksasi
                 if (!settledVertices.contains(neighbor)) {
 
@@ -72,6 +76,9 @@ public class Dijkstra {
                     unsettledVertices.add(neighbor);
                 }
             }
+            System.out.println("Menandai vertex sebagai settled: " + currentVertex.getName());
+            System.out.println("---------------------------------------------");
+
 
             // Tandai currentVertex sebagai settled (jaraknya sudah final)
             settledVertices.add(currentVertex);
@@ -105,6 +112,9 @@ public class Dijkstra {
                 lowestDistanceVertex = vertex;
             }
         }
+        System.out.println("Memilih vertex dengan jarak terkecil: "
+                + lowestDistanceVertex.getName()
+                + " (distance = " + lowestDistance + ")");
         // balikan nilai hasil dari lowestDistanceVertex (current vertex)
         return lowestDistanceVertex;
     }
@@ -127,6 +137,11 @@ public class Dijkstra {
 
         // Jika jarak baru lebih kecil, lakukan update
         if (sourceDistance + edgeWeight < evaluationVertex.getDistance()) {
+            System.out.println("Relaksasi terjadi pada " + evaluationVertex.getName()
+                    + ": update distance dari "
+                    + evaluationVertex.getDistance()
+                    + " → " + (sourceDistance + edgeWeight)
+                    + " melalui " + currentVertex.getName());
 
             evaluationVertex.setDistance(sourceDistance + edgeWeight);
 

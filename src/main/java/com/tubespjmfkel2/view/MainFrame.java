@@ -111,7 +111,7 @@ public class MainFrame extends JFrame {
     private Image loadImage() {
         try {
             return ImageIO.read(new File(
-                    "/home/ughway/Debiancode/Personalprojects/TubesPJMFKel2/src/main/java/com/tubespjmfkel2/view/asset/background.png"));
+                    "/home/ughway/Debiancode/Myprojects/TubesPJMFKel2/src/main/java/com/tubespjmfkel2/view/asset/background.png"));
         } catch (Exception e) {
             System.out.println("Gagal load image: " + e.getMessage());
             return null;
@@ -152,7 +152,7 @@ public class MainFrame extends JFrame {
                 }
             }
 
-            JOptionPane.showMessageDialog(null, "✔ Vertex: " + v + "\n✔ Edge: " + e);
+            JOptionPane.showMessageDialog(null, "✔ Jumlah Vertex: " + v + "\n✔ Jumlah Edge: " + e);
             refreshGraph();
             return true;
 
@@ -313,7 +313,11 @@ public class MainFrame extends JFrame {
             } finally {
                 uiGraph.getModel().endUpdate();
             }
-
+            try {
+                Thread.sleep(30);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
             autoCenterGraph(uiGraph, graphComponent);
             graphComponent.refresh();
             repaint();
