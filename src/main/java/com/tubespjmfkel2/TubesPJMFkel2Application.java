@@ -1,6 +1,5 @@
 package com.tubespjmfkel2;
 
-
 import javax.swing.SwingUtilities;
 
 import org.springframework.boot.SpringApplication;

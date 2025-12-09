@@ -14,6 +14,7 @@ import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.mxGraph;
 
+import com.tubespjmfkel2.domain.Vertex;
 import com.tubespjmfkel2.service.GraphService;
 import com.tubespjmfkel2.service.DijkstraService;
 import com.tubespjmfkel2.dto.DijkstraResult;
@@ -51,6 +52,7 @@ public class MainFrame extends JFrame {
         initUI();
     }
 
+
     private void initUI() {
 
         setTitle("Pencarian Rute Terpendek Menuju Bengkel");
@@ -58,13 +60,15 @@ public class MainFrame extends JFrame {
         JButton btnAddVertex = new JButton("➕ Tambah Titik Tempat");
         JButton btnAddEdge = new JButton("➕ Tambah Jarak");
         JButton btnFindPath = new JButton("🔎 Cari Rute Terpendek");
+        JButton btnFindNearest = new JButton("🛠 Cari Bengkel Terdekat");
         JButton btnResetGraph = new JButton("➖ Reset Semua");
 
         btnAddVertex.addActionListener(e -> addVertex());
         btnAddEdge.addActionListener(e -> addEdge());
         btnFindPath.addActionListener(e -> findPath());
         btnResetGraph.addActionListener(e -> resetGraph());
-
+        btnFindNearest.addActionListener(e -> findNearestWorkshop());
+        
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(Color.DARK_GRAY);
 
@@ -77,6 +81,8 @@ public class MainFrame extends JFrame {
         JPanel rightPanel = new JPanel();
         rightPanel.setOpaque(false);
         rightPanel.add(btnFindPath);
+        rightPanel.add(btnFindNearest);
+
 
         headerPanel.add(leftPanel, BorderLayout.WEST);
         headerPanel.add(rightPanel, BorderLayout.EAST);
@@ -230,6 +236,53 @@ public class MainFrame extends JFrame {
         }
     }
 
+    private void findNearestWorkshop() {
+
+        String start = JOptionPane.showInputDialog("Lokasi Anda Sekarang:");
+
+        if (start == null || start.isBlank()) {
+            JOptionPane.showMessageDialog(null, "Input tidak boleh kosong");
+            return;
+        }
+
+        // Ambil semua vertex yang namanya mengandung kata "Bengkel"
+        List<String> workshopList = graphService.getGraph().getVertices().stream()
+                .map(Vertex::getName)
+                .filter(n -> n.toLowerCase().contains("bengkel"))
+                .toList();
+
+        if (workshopList.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Tidak ada vertex yang terdeteksi sebagai bengkel!");
+            return;
+        }
+
+        // Panggil fitur baru dari service
+        DijkstraResult result = dijkstraService.findNearestDestination(start, workshopList);
+
+        if (result == null) {
+            JOptionPane.showMessageDialog(null, "Tidak ditemukan bengkel yang dapat dicapai!");
+            return;
+        }
+
+        // Highlight path seperti fitur existing
+        highlightPath(result.getPath());
+
+        // Tampilkan hasil ke dialog
+        StringBuilder sb = new StringBuilder();
+        sb.append("Bengkel Terdekat dari ").append(start).append("\n\n");
+        sb.append("Total jarak: ").append(result.getDistance()).append(" km\n\n");
+        sb.append("Rute:\n");
+
+        List<String> p = result.getPath();
+        for (int i = 0; i < p.size(); i++) {
+            sb.append(p.get(i));
+            if (i < p.size() - 1)
+                sb.append(" → ");
+        }
+
+        JOptionPane.showMessageDialog(null, sb.toString());
+    }
+
     private void findPath() {
         String start = JOptionPane.showInputDialog("Dari Titik:");
         String end = JOptionPane.showInputDialog("Menuju Titik:");
@@ -324,7 +377,6 @@ public class MainFrame extends JFrame {
             revalidate();
         });
     }
-
 
     public void autoCenterGraph(mxGraph uiGraph, mxGraphComponent graphComponent) {
         SwingUtilities.invokeLater(() -> {

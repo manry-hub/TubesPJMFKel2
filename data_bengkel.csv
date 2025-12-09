@@ -1,0 +1,29 @@
+TYPE,SOURCE,DESTINATION,WEIGHT
+V,Rumah,,
+V,kafe,,
+V,Kampus,,
+V,Gereja,,
+V,Toko,,
+V,Masjid,,
+V,Taman,,
+V,Stasiun,,
+V,Bengkel Amir,,
+V,Bengkel Amar,,
+V,Bengkel Imir,,
+E,Rumah,kafe,7
+E,kafe,Kampus,11
+E,Kampus,Gereja,6
+E,Gereja,Toko,9
+E,Toko,Masjid,4
+E,Masjid,Taman,13
+E,Taman,Stasiun,8
+E,Stasiun,Bengkel Amir,12
+E,Rumah,Kampus,4
+E,Rumah,Gereja,13
+E,Kampus,Taman,10
+E,Gereja,Bengkel Amir,20
+E,Gereja,Stasiun,2
+E,Toko,Stasiun,4
+E,Stasiun,Rumah,19
+E,Taman,Bengkel Amar,5
+E,Toko,Bengkel Imir,8
