@@ -68,7 +68,7 @@ public class MainFrame extends JFrame {
         btnFindPath.addActionListener(e -> findPath());
         btnResetGraph.addActionListener(e -> resetGraph());
         btnFindNearest.addActionListener(e -> findNearestWorkshop());
-        
+
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(Color.DARK_GRAY);
 
@@ -117,7 +117,7 @@ public class MainFrame extends JFrame {
     private Image loadImage() {
         try {
             return ImageIO.read(new File(
-                    "/home/ughway/Debiancode/Myprojects/TubesPJMFKel2/src/main/java/com/tubespjmfkel2/view/asset/background.png"));
+                    "/home/ughway/Debiancode/Myprojects/TubesPJMFKel2/src/main/java/com/tubespjmfkel2/view/asset/BackgroundWhite.png"));
         } catch (Exception e) {
             System.out.println("Gagal load image: " + e.getMessage());
             return null;
@@ -180,22 +180,79 @@ public class MainFrame extends JFrame {
         refreshGraph();
     }
 
+    private static final Map<String, String> ICON_MAP = Map.of(
+            "rumah", "rumah.png",
+            "bengkel", "bengkel.png",
+            "taman", "taman.png",
+            "stasiun", "stasiun.png",
+            "masjid", "masjid.png",
+            "gereja", "gereja.png",
+            "toko", "toko.png",
+            "kafe", "kafe.png",
+            "kampus", "kampus.png"
+
+    );
+
     private void addVertexUI(String vertexName) {
+
         uiGraph.getModel().beginUpdate();
         try {
+
+            String lower = vertexName.toLowerCase();
+            String iconFile = null;
+            for (var entry : ICON_MAP.entrySet()) {
+                if (lower.contains(entry.getKey())) {
+                    iconFile = entry.getValue();
+                    break;
+                }
+            }
+
+            String imagePath = null;
+            if (iconFile != null) {
+                imagePath = "/home/ughway/Debiancode/Myprojects/TubesPJMFKel2/src/main/java/com/tubespjmfkel2/view/asset/icon/"
+                        + iconFile;
+            }
+
+            File imgFile = (imagePath != null) ? new File(imagePath) : null;
+
+            String style;
+            if (imgFile != null && imgFile.exists()) {
+                style =
+                        "shape=image;" +
+                                "image=" + imgFile.toURI() + ";" +
+                                "imageWidth=80;" +
+                                "imageHeight=80;" +
+                                "fontColor=black;" +
+                                "fontSize=20;" +
+                                "align=center;" +
+                                "verticalAlign=top;" +
+                                "labelPosition=bottom;" +
+                                "verticalLabelPosition=bottom;";
+            } else {
+                style =
+                        "shape=ellipse;" +
+                                "strokeWidth=3;" +
+                                "fontSize=20;" +
+                                "strokeColor=white;" +
+                                "fontColor=black;";
+            }
+
             Object uiVertex = uiGraph.insertVertex(
                     uiGraph.getDefaultParent(),
                     null,
                     vertexName,
                     100, 100,
-                    100, 100,
-                    "shape=ellipse;strokeWidth=3;fontSize=20;strokeColor=white;strokeColorValue=3;fontColor=black;");
+                    100, 110,
+                    style
+            );
+
             uiVertexMap.put(vertexName, uiVertex);
+
         } finally {
             uiGraph.getModel().endUpdate();
         }
-
     }
+
 
     private void addEdge() {
         String source = JOptionPane.showInputDialog("Dari Titik Tempat:");
@@ -226,7 +283,7 @@ public class MainFrame extends JFrame {
                     weight,
                     vertexSource,
                     vertexDestination,
-                    "endArrow=none;strokeColor=white;rounded=true;strokeWidth=3;fontColor=orange;fontSize=20;");
+                    "endArrow=none;strokeColor=black;rounded=true;strokeWidth=3;fontColor=black;fontSize=20;");
 
             uiEdgeMap.put(source + "->" + destination, edge);
             uiEdgeMap.put(destination + "->" + source, edge);
@@ -318,7 +375,7 @@ public class MainFrame extends JFrame {
         uiGraph.getModel().beginUpdate();
         try {
             uiEdgeMap.forEach((k, e) -> uiGraph.setCellStyle(
-                    "strokeColor=red;strokeWidth=3;endArrow=none;rounded=true;fontColor=white;fontSize=20",
+                    "strokeColor=red;strokeWidth=3;endArrow=none;rounded=true;fontColor=black;fontSize=20",
                     new Object[]{e}));
 
             for (int i = 0; i < path.size() - 1; i++) {
@@ -334,7 +391,7 @@ public class MainFrame extends JFrame {
         Object edge = uiEdgeMap.get(source + "->" + destination);
         if (edge != null) {
             uiGraph.setCellStyle(
-                    "strokeColor=green;strokeWidth=5;endArrow=none;rounded=true;fontColor=white;fontSize=20",
+                    "strokeColor=green;strokeWidth=5;endArrow=none;rounded=true;fontColor=black;fontSize=20",
                     new Object[]{edge});
         }
     }
