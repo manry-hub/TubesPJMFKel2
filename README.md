@@ -1,22 +1,20 @@
-# Tubes PJM F Kel 2 – Pencarian Rute Terpendek
+# Tubes PJMF Kel 2
 
-Proyek ini adalah aplikasi **GUI untuk mencari rute terpendek menuju bengkel**, menggunakan **algoritma Dijkstra**
-dengan menerapkan mvc arhitecture.
+Proyek ini adalah aplikasi **Implementasi Algoritma Dijkstra pada Pencarian Rute Terpendek Menuju Bengkel Menggunakan
+Spring Framework dan Swing**
 
-reference algorithm from https://www.baeldung.com/java-dijkstra
+Reference algorithm from https://www.baeldung.com/java-dijkstra
 
-requirement: jdk 17 + jgraphx 3.9.3
+Framework: Spring
 
-# 🧠 Pola Arsitektur
+Library: Jgraphx, Swing, Common Csv, lombok
 
-Struktur ini mengikuti **pattern MVC (Model–View–Controller)**:
+# 🧠 Anggota
 
-- **Model**
-  Berisi data inti dan algoritma
-- **View**
-  Menampilkan hasil ke pengguna melalui tampilan grafis
-- **Controller**
-  Mengatur aliran data dan eksekusi logika
+- **1324001** Rizal Kusuma Awaludin
+- **1324002** Saputra Bayu Wijaya
+- **1324003** Muhammad Abyan Aufa
+- **1324023** Muhammad Hilman Ansory
 
 ---
 
@@ -43,7 +41,7 @@ tubespjmfkel2
 │
 └── view                              
     ├── asset                         # Folder aset gambar untuk GUI
-    │   └── icon                      # Folder ikon tempat/objek pada peta
+    │   └── icon                      
     ├── MainFrame.java                # GUI utama: input, visualisasi, output Dijkstra
     └── WelcomeFrame.java             # GUI awal (welcome screen) sebelum masuk ke main
 
@@ -104,8 +102,6 @@ public class Dijkstra {
 }
 ```
 
-yang bertanggung jawab memulai tampilan utama (`GUI`).
-
 ---
 
 ## 2. Package `controller`
@@ -113,7 +109,6 @@ yang bertanggung jawab memulai tampilan utama (`GUI`).
 Berisi kelas–kelas yang menjalankan logika penghubung antara **model** dan **view**.
 Controller bertindak sebagai jembatan yang memproses perintah pengguna, memanggil model, dan mengirimkan hasil kembali
 ke UI.
-
 
 ---
 
@@ -127,14 +122,11 @@ Digunakan untuk menyimpan hasil eksekusi algoritma Dijkstra dan Bersifat **immut
 
 Berisi seluruh **data dan logika murni aplikasi**, tanpa ketergantungan pada UI.
 
-
 ---
 
 ## 5. Package `view`
 
 Berisi seluruh tampilan pengguna (UI), komponen–komponen grafis, dan utilitas tampilan.
-
-
 
 ---
 
